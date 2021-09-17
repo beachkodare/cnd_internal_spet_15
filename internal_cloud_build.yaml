@@ -11,4 +11,4 @@ substitutions:
   _ZONE: 'us-central1-c'
   _K8SDEPLOYMENT: 'demo-api'
   _TAG_NAME: $SHORT_SHA
-  _IMAGE_NAME: 'gcr.io/dtc092021-300-instructor/internal:${_TAG_NAME}'
+  _IMAGE_NAME: 'gcr.io/dtc-092021-300-instructor/internal:${_TAG_NAME}'
