@@ -13,7 +13,7 @@
 pipeline {
     agent any 
     stages {
-        stage('Stage 1') {
+        stage('Pull code from Git') {
             steps {
                 echo 'Retrieving source from github' 
                 git branch: 'master',
@@ -22,7 +22,7 @@ pipeline {
                 sh 'ls -a'
             }
         }
-        stage('Stage 2') {
+        stage('Verify Build Server') {
             steps {
                 echo 'workspace and versions' 
                 sh 'echo $WORKSPACE'
@@ -32,7 +32,7 @@ pipeline {
         
             }
         }        
-         stage('Stage 3') {
+         stage('Dependencies and Test') {
             environment {
                 PORT = 8081
             }
@@ -44,14 +44,14 @@ pipeline {
         
             }
         }        
-         stage('Stage 4') {
+         stage('Dockerize') {
             steps {
                 echo "build id = ${env.BUILD_ID}"
                 echo 'Tests passed on to build Docker container'
                 sh "gcloud builds submit -t gcr.io/dtc-092021-300-instructor/internal:v2.${env.BUILD_ID} ."
             }
         }        
-         stage('Stage 5') {
+         stage('K8S Update') {
             steps {
                 echo 'Get cluster credentials'
                 sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project dtc-092021-300-instructor'
